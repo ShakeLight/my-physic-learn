@@ -1,0 +1,107 @@
+\documentclass[twocolumn, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[UTF8]{ctex} 
+\usepackage{geometry}
+\geometry{a4paper, margin=1.5cm}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs} 
+\usepackage{titlesec}
+\usepackage{caption}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+\title{\textbf{RC 与 RLC 电路暂态响应特性的实验研究}}
+\author{党佳一 \\ \small 学号：202511101093 \\ \small 北京师范大学物理学系}
+\date{\small 实验日期：2026年3月19日}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{实验数据记录与处理}
+	
+	\subsection{RC 电路放电数据（实验一）}
+	本实验测量了二组不同电容在 $R=60\Omega$ 下的放电过程。每组包含 10 个采样点，数据记录如表 1 所示。
+	
+	\begin{table*}[t]
+		\centering
+		\caption{RC 放电过程原始观测数据}
+		\small
+		\begin{tabular}{cc|cc||cc|cc}
+			\toprule
+			\multicolumn{4}{c||}{\textbf{第一组 ($C=326.3\text{nF}$)}} & \multicolumn{4}{c}{\textbf{第二组 ($C=1.016\mu\text{F}$)}} \\
+			序号 & $t(\mu s)$ & $u(V)$ & 序号 & $t(\mu s)$ & $u(V)$ \\
+			\midrule
+			1 & 0.00 & 1.99 & 1 & 0.00 & 1.98 \\
+			2 & 1.47 & 1.71 & 2 & 9.21 & 1.37 \\
+			3 & 4.92 & 1.02 & 3 & 17.47 & 0.887 \\
+			4 & 7.23 & 0.636 & 4 & 28.03 & 0.360 \\
+			5 & 12.92 & -0.119 & 5 & 50.68 & -0.472 \\
+			6 & 20.03 & -0.767 & 6 & 69.50 & -0.933 \\
+			7 & 25.92 & -1.13 & 7 & 92.73 & -1.31 \\
+			8 & 32.57 & -1.40 & 8 & 114.04 & -1.54 \\
+			9 & 38.91 & -1.59 & 9 & 128.83 & -1.65 \\
+			10 & 77.69 & -1.94 & 10 & 169.34 & -1.93 \\
+			\bottomrule
+		\end{tabular}
+	\end{table*}
+	
+		\begin{figure}[h]
+		\centering\includegraphics[width=0.5\textwidth]{C:/Figure1.png} 
+		\caption{RC 电路电压随时间的指数拟合曲线（实验一数据汇总）}
+		\label{fig:rc_fit}
+	\end{figure}
+	
+	
+	\begin{table}[h]
+		\centering
+		\caption{RC 电路拟合计算结果汇总}
+		\begin{tabular}{lccc}
+			\toprule
+			参数 & 理论 $\tau (\mu s)$ & 拟合 $\tau (\mu s)$ & 决定系数 $R^2$ \\
+			\midrule
+			组 1 & 19.58 & 16.93 & 0.99990 \\
+			组 2 & 60.96 & 55.37 & 0.99977 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	
+	\subsection{RLC 暂态过程数据（实验三）}
+	在 $R=20\Omega, L=9.816\text{mH}, C=326.3\text{nF}$ 欠阻尼条件下，记录峰值衰减数据。
+	
+		\begin{figure}[h]
+		\centering
+		% 请在此处填入第二张拟合图路径
+		\includegraphics[width=\linewidth]{C:/figure_2.png}
+		\caption{RLC 振荡振幅衰减拟合曲线}
+	\end{figure}
+	
+	\begin{table}[h]
+		\centering
+		\caption{RLC 欠阻尼振荡峰值电压 $V_k$}
+		\begin{tabular}{lccccccc}
+			\toprule
+			序号 $k$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+			\midrule
+			$V_k (\text{mV})$ & 99.55 & 67.15 & 45.35 & 30.47 & 20.63 & 13.89 & 9.28 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsubsection{电路参数对比}
+	\begin{itemize}
+		\item \textbf{振荡周期 $T$:} 测量值 $352.8\mu s$，计算值 $351.18\mu s$。
+		\item \textbf{品质因数 $Q$:} 测量值 7.98，理论值 8.672。
+		\item \textbf{衰减特性:} 拟合系数 $\alpha = 499.7 \text{ s}^{-1}$，$R^2 = 0.99999$。
+		\item \textbf{临界阻尼:} 测量 $R_c = 290\Omega$，计算 $R_c = 346.8\Omega$。
+	\end{itemize}
+	
+
+	
+	\section{结论}
+	通过对实验一 20 组原始数据及实验三衰减数据的分析，验证了线性电路在暂态过程中的指数与振荡衰减规律。实验偏差主要来源于系统内阻与信号源输出阻抗。
+	
+\end{document}

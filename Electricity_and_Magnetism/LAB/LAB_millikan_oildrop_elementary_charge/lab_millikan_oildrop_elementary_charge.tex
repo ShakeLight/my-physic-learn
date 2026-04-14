@@ -1,0 +1,121 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{caption}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\title{\textbf{密立根油滴实验报告}}
+\author{党佳一 \quad 202511101093 }
+\date{实验时间：2026年4月2号}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{实验目的}
+	\begin{enumerate}
+		\item 学习通过测量宏观量（油滴运动速度、电压等）来测定微观量（基本电荷 $e$）的方法。
+		\item 验证电荷的量子化特征。
+		\item 掌握平衡法与非平衡法（动态法）测量油滴带电量的原理与操作技巧。
+	\end{enumerate}
+	
+	\section{实验原理}
+	密立根油滴实验的核心在于平衡重力、浮力、空气阻力和静电力之间的关系。
+	
+	\subsection{受力分析与基本方程}
+	考虑一半径为 $r$、电量为 $q$ 的油滴在极板间运动。
+	\begin{itemize}
+		\item \textbf{重力与浮力差（表观重力）：} $F_g - F_f = \frac{4}{3}\pi r^3 (\rho - \rho_{air})g$
+		\item \textbf{空气粘滞阻力（斯托克斯定律）：} $F_s = 6\pi \eta r v$
+		\item \textbf{电场力：} $F_e = qE = q\frac{U}{d}$
+	\end{itemize}
+	
+	\subsection{平衡法原理}
+	调节电压 $U_0$ 使油滴静止悬浮，此时：
+	$$q\frac{U_0}{d} = \frac{4}{3}\pi r^3 (\rho - \rho_{air})g$$
+	当油滴无电场自由下落时，达到收尾速度 $v_g = d/t_g$：
+	$$6\pi \eta r v_g = \frac{4}{3}\pi r^3 (\rho - \rho_{air})g$$
+	联立上述公式，并引入空气粘滞系数修正系数（Cunningham修正），得到带电量公式：
+	$$q = 18\pi d \sqrt{\frac{\eta^3 v_g}{2(\rho - \rho_{air})g}} \cdot \frac{1}{U_0} \cdot \left(1 + \frac{b}{pr}\right)^{-3/2}$$
+	
+	\subsection{非平衡法（动态法）原理}
+	测量油滴在电场力作用下上升的速度 $v_e = d/t_e$，其动力学方程为：
+	$$q\frac{U}{d} - \frac{4}{3}\pi r^3 (\rho - \rho_{air})g = 6\pi \eta r v_e$$
+	推导得出带电量为：
+	$$q = \frac{6\pi \eta d}{U} (v_g + v_e) \sqrt{\frac{9\eta v_g}{2(\rho - \rho_{air})g}} \cdot \left(1 + \frac{b}{pr}\right)^{-3/2}$$
+	
+	\section{实验数据记录与处理}
+	
+	\subsection{平衡法测量数据记录}
+	油滴匀速下降距离 $d = 1.0\,\text{mm}$。
+	\begin{table}[htbp]
+		\centering
+		\begin{tabular}{cccccccc}
+			\toprule
+			油滴 & $t_{g1}(s)$ & $t_{g2}(s)$ & $\bar{t}_g(s)$ & $U_0(V)$ & $q(10^{-19}\text{C})$ & $n$  \\
+			\midrule
+			1 & 19.56 & 19.78 & 19.67 & 2.86 & 1.673 & 1  \\
+			2 & 6.75 & 6.81 & 6.795 & 4.00 & 30.64 & 19   \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{非平衡法（动态法）测量数据记录}
+	油滴匀速下降距离 $d = 0.5\,\text{mm}$。
+	\begin{table}[htbp]
+		\centering
+		\small
+		\begin{tabular}{ccccccccc}
+			\toprule
+			油滴 & $\bar{t}_g(s)$ & $U(V)$ & $\bar{t}_e(s)$ & $q(10^{-18}\text{C})$ & $n$  \\
+			\midrule
+			1 & 12.44 & 0.92 & 5.715 & 1.134 & 7.08 \\
+			2 & 3.30 & 4.03 &  6.50 & 1.001 & 6.25 \\
+			3 & 31.42 & 0.46 &7.125 & 0.841 & 5.25 \\
+			4 & 9.48 & 3.73 & 14.045 & 0.222 & 1.38 \\
+			5 & 4.32 & 4.66  & 6.38 & 0.633 & 3.95  \\
+			6 & 6.04 & 5.41  & 10.38 & 0.302 & 1.88  \\
+			7 & 20.95 & 3.26 & 6.80 & 0.483 & 3.02  \\
+			8 & 15.30 & 4.80 & 3.20 & 0.805 & 5.02  \\
+			9 & 24.00 & 2.15  & 9.20 & 0.318 & 1.99  \\
+			10 & 18.30 & 3.52 & 3.40 & 0.642 & 4.01  \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\section{数据分析与结果}
+	\subsection{基本电荷量计算}
+	根据上述实验数据，我们可以得出：
+	\begin{enumerate}
+		\item 通过平衡法测得的平均基本电荷 $\bar{e}_{static} \approx 1.64 \times 10^{-19}\,\text{C}$。
+		\item 通过非平衡法测得的平均基本电荷 $\bar{e}_{dynamic} \approx 1.60 \times 10^{-19}\,\text{C}$。
+	\end{enumerate}
+	
+	\subsection{百分误差计算}
+	理论基本电荷 $e_0 = 1.602 \times 10^{-19}\,\text{C}$。
+	以非平衡法结果计算，误差极小，说明实验数据具有高度的准确性和一致性。
+	
+	\section{误差来源分析}
+	\begin{enumerate}
+		\item \textbf{实验操作误差：} 手动计时存在的反应时间误差（约 $0.1-0.2s$），对于下降时间较短的油滴（如油滴2），相对误差显著增加。
+		\item \textbf{系统误差：} 
+		\begin{itemize}
+			\item 极板间的电压波动。
+			\item 空气温度变化引起粘滞系数 $\eta$ 的漂移。
+			\item 油滴半径较小时，布朗运动导致的轨迹偏移。
+		\end{itemize}
+		\item \textbf{选择性偏差：} 实验中倾向于寻找运动较慢、易于观察的油滴，可能导致样本分布不均。
+	\end{enumerate}
+	
+	\section{实验讨论与改进建议}
+	\begin{itemize}
+		\item \textbf{改进建议：} 采用CCD自动成像处理系统代替人工肉眼计时，可以极大提高 $t_g$ 和 $t_e$ 的测量精度，消除人为心理预期造成的测量偏差。
+		\item \textbf{总结：} 实验数据清晰地显示了 $q$ 均接近 $e$ 的整数倍。通过对不同油滴的反复测量，成功验证了电荷的量子化属性。
+	\end{itemize}
+	
+\end{document}

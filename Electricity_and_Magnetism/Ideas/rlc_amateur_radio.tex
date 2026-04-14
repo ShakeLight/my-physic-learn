@@ -1,0 +1,66 @@
+\documentclass[11pt,a4paper]{ctexart} % 使用 ctexart 直接支持中文
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\title{\textbf{无线电之魂：RLC 谐振与天线调谐器的深度物理分析}}
+\author{物理系学生与业余无线电爱好者 (HAM)}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		在射频工程中，RLC 谐振电路是信号筛选与能量传输的核心。对于业余无线电爱好者而言，理解天线调谐器（ATU）内部的相位对抗与电压增强效应，是提升通联效率、保护昂贵发射设备的关键。本文将结合电磁学理论与 EveryCircuit 仿真现象，对相关物理本质进行深度科普。
+	\end{abstract}
+	
+	\section{射频阻抗的本质：实部与虚部的博弈}
+	天线系统并非单纯的电阻，而是一个复杂的复阻抗系统。其总阻抗 $Z$ 可表示为：
+	\begin{equation}
+		Z = R + j\left( X_L - X_C \right) = R + j\left( \omega L - \frac{1}{\omega C} \right)
+	\end{equation}
+	其中，$R$ 代表系统的**辐射电阻**（转化为电磁波的能量）和损耗电阻；而虚部 $jX$ 则是导致能量回弹、产生驻波（SWR）的元凶。
+	
+	\section{相位对抗：谐振点的物理图像}
+	当你调整调谐器旋钮，使电路达到串联谐振点时，满足以下条件：
+	\begin{equation}
+		\omega_0 L = \frac{1}{\omega_0 C} \implies f_0 = \frac{1}{2\pi\sqrt{LC}}
+	\end{equation}
+	此时，电感两端的电压 $U_L$ 与电容两端的电压 $U_C$ 在相位上恰好相反（相差 $180^\circ$）。从物理图像上看：
+	\begin{itemize}
+		\item \textbf{电感}：在磁场中储存能量，试图阻碍电流的变化。
+		\item \textbf{电容}：在电场中储存能量，试图阻碍电压的变化。
+	\end{itemize}
+	谐振时，这两股原本“对抗”电源的力量刚好通过 $180^\circ$ 的相位差相互抵消。外部电源感知到的电感和电容仿佛“消失”了，电路呈现纯电阻性（$\phi = 0$）。此时能量传输效率最高，天线能够获得最大的射频电流。
+	
+	\section{电压的“杠杆效应”：品质因数 $Q$}
+	在 HAM 操作中，我们常发现调谐器内部的电感和电容需要极高的耐压。这是因为在谐振点，无功元件两端的电压会由于能量的往复积累而急剧升高。其放大倍数由品质因数 $Q$ 决定：
+	\begin{equation}
+		Q = \frac{1}{R_{total}}\sqrt{\frac{L}{C}}
+	\end{equation}
+	在谐振时，电感或电容两端的电压峰值为：
+	\begin{equation}
+		U_L \approx U_C = Q \cdot U_{in}
+	\end{equation}
+	根据实验记录，如果电路的 $Q=6$，哪怕发射机只输出了 $2\text{V}$ 的信号，调谐器内部的电容也会承受超过 $12\text{V}$ 的瞬时高压。在大功率发射时，这个电压往往能达到数千伏。
+	
+	\section{调谐器（ATU）的实战意义}
+	天线调谐器的本质是一个**阻抗变换器**。
+	\begin{enumerate}
+		\item \textbf{虚部补偿}：如果天线物理长度偏短显容性，调谐器就加入电感，利用 $180^\circ$ 相位反向的特性将容抗“抹平”。
+		\item \textbf{实部匹配}：通过改变 $L$ 和 $C$ 的配比，将天线不标准的电阻（如 $20\Omega$）变换为发射机标称的 $50\Omega$。
+	\end{enumerate}
+	
+	\section{总结}
+	谐振不仅仅是电流达到最大值那么简单，它是电源驱动力与系统内部电子集体运动相位同步的结果。理解了这一层“相位对抗”，你就能在调谐过程中，通过示波器上的李萨如图形或驻波表的变化，洞察到调谐器内部那场看不见的能量战争。
+	
+\end{document}

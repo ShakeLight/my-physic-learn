@@ -1,0 +1,271 @@
+\documentclass[a4paper, 10pt]{ctexart}
+
+% --- 基础宏包 ---
+\usepackage{geometry}
+\geometry{left=1.5cm, right=1.5cm, top=2.5cm, bottom=2.5cm} % 调整页边距
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{siunitx}
+\usepackage{titletoc}
+\usepackage{titlesec}
+\usepackage{setspace}
+
+% --- 格式微调 ---
+\captionsetup{font=small, labelfont=bf}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+
+
+\begin{document}
+	
+	% ==========================================
+	% 封面部分 (单栏)
+	% ==========================================
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{2cm}
+			{\Huge \bfseries 普通物理实验报告 \par}
+			\vspace{3cm}
+			
+			{\huge \bfseries 利用霍尔传感器测量磁场分布 \par}
+			\vspace{4cm}
+			
+			\doublespacing
+			{\Large
+				\begin{tabular}{rl}
+					\textbf{姓\qquad 名：} & 党佳一 \\
+					\textbf{学\qquad 号：} & 202511101093 \\
+					\textbf{学\qquad 院：} & 物理与天文学院 \\ % 可根据实际情况修改
+					\textbf{实验时间：} & 2026年3月26日 \\
+				\end{tabular}
+			}
+			\singlespacing
+			
+			\vfill
+			{\Large \textbf{北京师范大学物理与天文学院} \par}
+			\vspace{2cm}
+		\end{center}
+	\end{titlepage}
+	
+	% ==========================================
+	% 目录部分 (单栏)
+	% ==========================================
+\thispagestyle{empty}
+\begin{center}
+	\vspace*{1.5cm}
+	{\selectfont\Huge\bfseries 目\quad 录} % 加大字号并增加字间距
+	\vspace{2cm}
+\end{center}
+
+
+% 使用 titletoc 的高级设置让目录填充页面
+
+
+\titlecontents{subsection}[2em]{\addvspace{1.5ex}\normalsize}
+{\thecontentslabel\quad}{}
+{\titlerule*[0.7pc]{.}\contentspage}
+
+\begin{spacing}{1.8} % 整体行间距拉大，使内容填充全页
+	\tableofcontents
+\end{spacing}
+
+\vfill % 将剩余空间填满
+\clearpage
+\setcounter{page}{1}
+	
+	% ==========================================
+	% 正文部分 (双栏)
+	% ==========================================
+	\twocolumn[
+	\begin{center}
+		{\Large \bfseries 利用霍尔传感器测量磁场分布实验研究\vspace{1ex}} \\
+		{\normalsize 党佳一 \quad 学号：202511101093 \quad 北京师范大学物理与天文学院\vspace{2ex}}
+	\end{center}
+	\begin{abstract}
+		\noindent \textbf{摘要：} 本文基于霍尔效应原理，利用 HG106C 砷化镓霍尔传感器对空间磁场分布进行了系统测量。实验首先标定了霍尔电压与磁感应强度及工作电流的线性关系，求得传感器灵敏度。在此基础上，推导并验证了亥姆霍兹线圈轴线上的均匀磁场分布规律。最后，重点探究了软磁铁球在均匀外磁场中的磁化现象，测定了其感应附加磁场随距离的衰减规律，并与理想磁偶极子模型进行了理论对比。数据表明实验结果与理论预期高度吻合。\\
+		\textbf{关键词：} 霍尔效应；亥姆霍兹线圈；磁场分布；磁偶极子；误差分析
+		\vspace{2ex}
+	\end{abstract}
+	]
+	
+	\section{实验原理与公式推导}
+	
+	\subsection{霍尔效应原理}
+	将置于磁场中的载流导体（或半导体）通以电流时，在垂直于电流和磁场的方向上会产生横向电势差，此即霍尔效应。霍尔电压 $V_H$ 满足：
+	\begin{equation}
+		V_H = K_H I_s B
+	\end{equation}
+	其中 $I_s$ 为工作电流，$B$ 为磁感应强度，$K_H$ 为霍尔传感器的灵敏度。当 $I_s$ 恒定时，$V_H \propto B$，测得 $V_H$ 即可求出 $B$。为消除不平衡电压等副效应，实验采用对称测量法（正反向倒向法）取平均值。
+	
+	\subsection{亥姆霍兹线圈磁场推导}
+	亥姆霍兹线圈由两个半径均为 $R$、匝数均为 $N$ 的共轴圆环形线圈组成。设中心坐标分别为 $x = \pm \frac{d}{2}$，线圈中电流方向相同且大小为 $I_M$。根据毕奥-萨伐尔定律及磁场叠加原理，其轴线上任意一点 $x$ 处的磁感应强度为：
+	\begin{equation}
+		B_x(x) = \frac{\mu_0 N I_M R^2}{2\left[R^2 + \left(x+\frac{d}{2}\right)^2\right]^{3/2}} + \frac{\mu_0 N I_M R^2}{2\left[R^2 + \left(x-\frac{d}{2}\right)^2\right]^{3/2}}
+	\end{equation}
+	当线圈间距 $d = R$ 时，在原点 $x=0$ 处满足：
+	\begin{equation*}
+		\frac{\partial B_x}{\partial x} = \frac{\partial^2 B_x}{\partial x^2} = \frac{\partial^3 B_x}{\partial x^3} = 0
+	\end{equation*}
+	这表明在 $x=0$ 附近很大范围内磁场变化极缓，形成匀强磁场区。
+	
+	\subsection{铁球磁化与磁偶极子模型推导}
+	将相对磁导率 $\mu_r \gg 1$ 的软磁铁球（半径为 $R$）置于匀强外磁场 $\mathbf{B}_0 = (B_0, 0, 0)$ 中，铁球被磁化。由于内部磁化均匀，球外区域产生的感应磁场相当于一个位于球心的磁偶极子产生的场。在球外（$r > R$）空间某点 $P(x,y,z)$ 处，感应磁场为：
+	\begin{equation}
+		\mathbf{B}_1(P) = \frac{R^3 B_0}{r^5} (2x^2 - y^2 - z^2, 3xy, 3xz)
+	\end{equation}
+	在本实验考察的对称轴（$x$ 轴）上，$y=0, z=0, r=x$，带入上式化简得 $x$ 轴上的附加感应磁场 $\Delta B$：
+	\begin{equation}
+		\Delta B = 2B_0 \left( \frac{R}{x} \right)^3
+	\end{equation}
+	即感应磁场随距离 $x$ 呈反三次方衰减。
+	
+	\section{实验数据与结果}
+	
+	\subsection{测量霍尔电压与磁感应强度之间关系}
+	固定 $I_s = 10.00\text{ mA}$，改变励磁电流 $I_M$，测量得到的标定数据见表 \ref{tab:exp1}。
+	
+	\begin{table}[H]
+		\centering
+		\caption{霍尔电压与磁感应强度的标定数据}
+		\label{tab:exp1}
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{ccccccc}
+				\toprule
+				$I_M$ & $B$ & $U_{++}$ & $U_{+-}$ & $U_{-+}$ & $U_{--}$ & $V_H$ \\
+				(mA) & ($\mu$T) & (mV) & (mV) & (mV) & (mV) & (mV) \\
+				\midrule
+				50  & 202.3  & -4.18 & 3.97 & 4.65 & -4.84 & 0.335 \\
+				100 & 404.6  & -3.83 & 3.63 & 5.01 & -5.20 & 0.687 \\
+				200 & 809.2  & -3.14 & 2.94 & 5.69 & -5.89 & 1.37  \\
+				300 & 1213.8 & -2.46 & 2.27 & 6.37 & -6.56 & 2.05  \\
+				400 & 1618.4 & -1.78 & 1.57 & 7.05 & -7.25 & 2.73  \\
+				\bottomrule
+			\end{tabular}
+		}
+
+	\end{table}
+	
+	
+	\begin{figure}[H]
+		\centering
+		% TODO: 修改此处的文件名即可插入实验一的图
+		\includegraphics[width=1.0\linewidth]{C:/霍尔-1.png} 
+		\caption{霍尔电压 $V_H$ 与磁感应强度 $B$ 线性拟合曲线}
+	\end{figure}
+	
+
+	
+			经最小二乘法线性拟合，得到斜率 $a = 0.001689\text{ mV}/\mu\text{T}$，决定系数 $R^2 = 0.99998$。求得霍尔灵敏度 $K_H = 170.0\text{ V/(A}\cdot\text{T)}$。数据高度线性，传感器状态极佳。	
+	
+		\begin{figure}[H]
+		\centering
+			\includegraphics[width=1.0\linewidth]{C:/霍尔_1.2.png}} 
+		\caption{霍尔电压 $V_H$ 与$U_{++}$ 线性拟合曲线}
+		\end{figure}
+			经最小二乘法线性拟合，得到斜率 $ \alpha = 0.9951\text{ mV}/\mu\text{T}$，$ \beta =4.4982 $决定系数 $R^2 = 0.99996$。数据高度线性。
+			
+		\subsection{测量霍尔电压工作电流之间的关系}
+	固定 $I_M = 600\text{ mA}$，$B=2427.5\text{ $\mu$T}$，改变霍尔传感器工作电流测量霍尔电压。测量得到的标定数据见表 \ref{tab:exp1}。
+	
+	\begin{table}[H]
+		\centering
+		\caption{霍尔电压与工作电流的标定数据}
+		\label{tab:exp1}
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{ccccccc}
+				\toprule
+				$I_S$  & $U_{++}$ & $U_{+-}$ & $U_{-+}$ & $U_{--}$ & $V_H$ \\
+				(mA) & (mV) & (mV) & (mV) & (mV) & (mV) \\
+				\midrule
+				1.00 & -0.02 & 0.01 & 0.83 & -0.84 & 0.41  \\
+				2.00 & -0.03 & 0.01 & 1.66 & -1.68 & 0.82  \\
+				3.00 & -0.04 & 0.02 & 2.49 & -2.51 & 1.23  \\
+				4.00 & -0.07 & 0.03 & 3.33 & -3.36 & 1.64  \\
+				5.00 & -0.09 & 0.04 & 4.18 & -4.22 & 2.06  \\
+				6.00 & -0.13 & 0.06 & 5.02 & -5.08 & 2.47  \\
+				7.00 & -0.18 & 0.08 & 5.86 & -5.94 & 2.88  \\
+				8.00 & -0.24 & 0.11 & 6.72 & -6.83 & 3.30  \\	\bottomrule
+			\end{tabular} 
+		}
+		
+		
+	\end{table}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\linewidth]{C:/霍尔_2.png} 
+		\caption{霍尔电压 $V_H$ 与工作电流 $I_S$ 线性拟合曲线}
+	\end{figure}
+	
+		
+	经最小二乘法线性拟合，得到斜率 $a = 0.4127 \text{ mV}/m\text{T}$，决定系数 $R^2 = 0.99999$。求得霍尔灵敏度 $K_H = 170.2\text{ V/(A}\cdot\text{T)}$。数据高度线性，与实验$2.1$数据吻合。
+			
+	
+	
+	\subsection{亥姆霍兹线圈轴向场测量}
+	固定 $I_M = 600\text{ mA}$，$I_s = 10.00\text{ mA}$，测得轴线上磁场在 $x \in [-12, 30]\text{ mm}$ 区间内电压波动不超过 $0.03\text{ mV}$，完美符合亥姆霍兹线圈形成均匀场的理论预期。
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.1\linewidth]{C:/霍尔_3.png} 
+			\caption{亥姆霍兹线圈轴线上磁感应强度分布}
+		\end{figure}
+	
+	\subsection{铁球感应场 $\Delta B$ 测量}
+	在均匀场中心放入退磁铁球，记录放球前后单极性读数 $U_{++}$ 与 $U'_{++}$ 并换算为磁场，数据见表 \ref{tab:exp4}。
+	
+	\begin{table}[H]
+		\centering
+		\caption{铁球感应磁场 $\Delta B$ 测量数据}
+		\label{tab:exp4}
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{cccccc}
+				\toprule
+				$x(\text{mm})$ & $U_{++}$ & $U'_{++}$ & $B(\mu\text{T})$ & $B'(\mu\text{T})$ & $\Delta B(\mu\text{T})$ \\
+				\midrule
+				31.00 & -0.40 & 5.11  & 240.8 & 564.6 & 323.8 \\
+				32.00 & -0.40 & 4.25  & 240.8 & 514.3 & 273.5 \\
+				33.00 & -0.41 & 3.46  & 240.3 & 467.9 & 227.6 \\
+				34.00 & -0.41 & 3.01  & 240.3 & 441.4 & 201.1 \\
+				36.00 & -0.41 & 2.14  & 240.3 & 390.3 & 150.0 \\
+				42.00 & -0.43 & 0.84  & 239.1 & 313.7 & 74.6  \\
+				48.00 & -0.46 & 0.25  & 237.4 & 279.1 & 41.7  \\
+				54.00 & -0.51 & -0.08 & 234.4 & 259.7 & 25.3  \\
+				60.00 & -0.58 & -0.28 & 230.3 & 247.9 & 17.6  \\
+				\bottomrule
+			\end{tabular}
+		}
+	\end{table}
+	
+	将表 2 中的实验值与式 (3) 理论曲线比对，发现 $\Delta B$ 随距离 $x$ 增大而迅速减弱，呈现极好的反三次方衰减关系。
+	
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.1\linewidth]{C:/霍尔-4.png}
+		\rule{0.8\linewidth}{0.5pt} \\ \vspace{3cm} 
+		\caption{铁球感应磁场实验值与理论曲线对比}
+	\end{figure}
+	
+	\section{误差来源与详细分析}
+	尽管实验数据整体契合度高，但仍存在少量残余误差，主要来源于以下三个维度：
+	
+	\begin{enumerate}
+		\item \textbf{环境磁场干扰（系统误差）：} 实验未完全屏蔽地磁场。地磁场的水平分量及实验室环境中的杂散磁场与测量场叠加，导致测量的本底磁场发生基线漂移。这在图谱中表现为两端的不完全对称。
+		\item \textbf{仪器体效应与定位精度（仪器误差）：} 
+		\begin{itemize}
+			\item 理论上霍尔传感器应测单点的局域磁场，但实际传感器尺寸为 $1.5\text{ mm} \times 1.5\text{ mm}$，其测量值为有效面积内的积分平均值（体效应）。在靠近铁球表面（如 $x=31\text{ mm}$，即 $r \to R$）磁场梯度极大的区域，这种体效应会导致实验测量值略微偏离点偶极子理论。
+			\item 滑轨刻度零点与线圈严格几何中心可能存在微小错位，带来定位偏差。
+		\end{itemize}
+		\item \textbf{理论模型的近似性限制：} 式 (2) 偶极子模型建立在铁球磁导率 $\mu_r \to \infty$ 的假设上。虽然实际软铁的 $\mu_r$ 可达 $200\sim400$，但并非无穷大。此外，当测量点距离球体表面极近时，高阶多极距项（Quadrupole 等）的贡献开始显现，偶极近似的精度必然会有所下降。
+	\end{enumerate}
+	
+	\section{结论}
+	本实验成功完成了对 HG106C 霍尔传感器的特性标定，验证了霍尔电压与外场及激磁电流之间的线性规律。亥姆霍兹线圈磁场分布图直观证实了其构造均匀场的优越性。此外，对于置于匀强外场中软磁体铁球的研究，不仅验证了磁化过程，其感应附加场 $\Delta B$ 亦与理论推导的磁偶极子反三次方衰减模型完美吻合。在对各项系统及环境误差进行详细归因后确认，本套实验方案方法严谨、数据精确度高，圆满达成了全部研究目标。
+	
+	\section{P.S.}
+	本实验报告的LaTex重构由本人参与、Gemini协助完成，实验数据及分析完全由本人记录完成。
+	
+\end{document}

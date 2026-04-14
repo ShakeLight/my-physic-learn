@@ -1,0 +1,150 @@
+\documentclass[10pt,twocolumn,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[UTF8, fontset=fandol]{ctex} % 解决中文乱码的最稳健方案
+\usepackage{amsmath, amssymb, bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{abstract}
+\usepackage{titlesec}
+\usepackage{siunitx}
+\usepackage{float}
+
+% 页面边距与排版设置
+\geometry{left=1.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm}
+\columnsep 0.6cm
+
+\title{\vspace{-1cm} \textbf{\Large 菲涅耳双棱镜干涉特性研究与钠黄光波长测定}}
+\author{姓名：\underline{党佳一} \quad 学号：\underline{202511101093} \quad  物理与天文学院}
+\date{\today}
+
+\begin{document}
+	
+	\twocolumn[
+	\begin{center}
+		\maketitle
+		\begin{onecolabstract}
+			\textbf{摘要：} 本实验基于分波面双光束干涉原理，利用菲涅耳双棱镜实现了钠黄光与 LED 光源的干涉观察。实验通过对光路系统的精密准直，定量研究了干涉条纹随实验参量的变化规律。利用 CCD 图像传感器采集了 20 组钠黄光干涉条纹位置，采用最小二乘法线性拟合确定了条纹间距 $\Delta x$，结合二次成像法测得虚光源间距 $h$，最终测得钠黄光波长。此外，通过对比 LED 与加滤色片后条纹的可见度，探讨了光源单色性对干涉现象的影响。\\
+			\textbf{关键词：} 菲涅耳双棱镜；线性拟合；二次成像法；单色性；可见度
+		\end{onecolabstract}
+	\end{center}
+	\vspace{0.5cm}
+	]
+	
+	\section{理论推导}
+	\subsection{干涉条纹的形成}
+	菲涅耳双棱镜由两个底面相贴、折射角 $\alpha$ 极小的三棱镜组成。当点光源（狭缝）位于双棱镜后的对称轴上时，光线经折射后形成两束具有恒定相位差的相干光，等效于两个虚光源 $S_1$ 和 $S_2$ 的发散。
+	
+	设狭缝至双棱镜距离为 $a$，双棱镜折射率为 $n$，根据折射定律（小角近似 $\sin \theta \approx \theta$），偏折角 $\delta = (n-1)\alpha$。两虚光源间的距离 $h$ 为：
+	\begin{equation}
+		h \approx 2a \delta = 2a(n-1)\alpha
+	\end{equation}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{C:/Users/党佳一/Pictures/Screenshots/屏幕截图 2026-04-13 143632.png}
+		\caption{双光束干涉示意图}
+
+	\end{figure}
+	
+	\subsection{条纹间距公式}
+	设虚光源至观察屏（CCD）的距离为 $L$。在屏上任一点 $P(y)$，两相干光的光程差 $\Delta$ 为：
+	\begin{equation}
+		\Delta = \sqrt{L^2 + (y + h/2)^2} - \sqrt{L^2 + (y - h/2)^2} \approx \frac{hy}{L}
+	\end{equation}
+	当 $\Delta = m\lambda$（$m=0, \pm1, \dots$）时出现明纹，其位置 $y_m = m\frac{L\lambda}{h}$。相邻明纹间距 $\Delta x$ 为：
+	\begin{equation}
+		\Delta x = y_{m+1} - y_m = \frac{L}{h} \lambda \implies \lambda = \frac{h}{L} \Delta x
+	\end{equation}
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{C:/Users/党佳一/Pictures/Screenshots/屏幕截图 2026-04-13 144045.png}
+		\caption{干涉图像}
+		
+	\end{figure}
+	
+	\subsection{可见度与单色性}
+	若光源非严格单色（如 LED），干涉条纹是不同波长条纹的非相干叠加。可见度 $V$ 定义为：
+	\begin{equation}
+		V = \frac{I_{\max} - I_{\min}}{I_{\max} + I_{\min}}
+	\end{equation}
+	根据傅里叶光学，对于光谱宽度为 $\Delta \lambda$ 的光源，相干长度 $l_c \approx \lambda^2 / \Delta \lambda$。当光程差超过 $l_c$ 时，条纹可见度将显著下降甚至消失。
+	
+	\section{实验内容与数据分析}
+	
+	\subsection{调节光路与规律总结}
+	通过调节狭缝、双棱镜与 CCD 的共轴及平行度，观察到干涉条纹。实验总结规律如下：
+	\begin{enumerate}
+		\item \textbf{狭缝宽度}：狭缝加宽，光强增加但对比度（可见度）下降；过宽时条纹消失。
+		\item \textbf{狭缝与双棱镜距离 $a$}：由式(1)知 $a$ 增大则 $h$ 增大，由式(3)知条纹间距 $\Delta x$ 减小。
+		\item \textbf{CCD 位置}：增大 $L$（移动相机远离双棱镜），条纹间距 $\Delta x$ 增大，但单位面积光强减弱。
+		\item \textbf{棱脊平行度}：若棱脊与狭缝不平行，条纹会发生倾斜且清晰度下降。
+	\end{enumerate}
+			\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{C:/Users/党佳一/Pictures/Screenshots/屏幕截图 2026-04-13 144157.png}
+		\caption{1.钠灯 2.可调狭缝 3.双棱镜 4.凸透镜 5.COMS相机 6.光学导轨}
+		
+	\end{figure}
+	
+	\subsection{钠黄光波长的测定}
+	保持光路稳定，利用 CCD 采集 20 个相继条纹的位置。
+	
+	\subsection{条纹间距 $\Delta x$ 的线性拟合}
+对 CCD 记录的 20 组条纹像素坐标 $x_i$ 进行线性拟合（$1\text{ pixel} = 3.45\ \mu\text{m}$）。
+
+\begin{figure}[H]
+	\centering
+	% 如果你已经生成了图片，请取消下面一行的注释并确保文件名正确
+	\rule{0.8\linewidth}{0.5pt} 
+	\\ [0.5cm] % 这里预留高度，你插入图片后会自动撑开
+	\includegraphics[width=0.9\linewidth]{C:/Github/Optics/LAB_Fresnel_Biprism_Interference/lab_fitting.png}
+	\rule{0.8\linewidth}{0.5pt}
+	\caption{条纹位置 $x_i$ 与级数 $i$ 的线性拟合（$R^2 > 0.9999$）}
+	\label{fig:fitting}
+\end{figure}
+	
+	拟合得到：
+	$k (\Delta ) = \underline{\quad2.82 \cdot 10^{-4}\quad}$ m。
+	
+	\subsection{虚光源间距 $h$ 的测量数据}
+根据实验原始记录，提取二次成像数据如下：
+\begin{table}[H]
+	\centering
+	\caption{二次成像法测量虚光源间距}
+	\begin{tabular}{lrr}
+		\toprule
+		测量项目 & 左侧读数/pixel & 右侧读数/pixel \\
+		\midrule
+		放大像 $d_1$ & 788 & 1888  \\
+		缩小像 $d_2$ & 1148 & 1358 \\
+		\midrule
+		\multicolumn{3}{l}{计算值: $d_1 = 3.795 \cdot 10^{-3}\text{ m}, d_2 = 7.245 \cdot 10^{-4}\text{ m}$} \\
+		\multicolumn{3}{l}{虚光源间距 $h = \sqrt{d_1 d_2} = 1.658 \cdot 10^{-3} \text{ m}$} \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+	测得 $L = \underline{\quad0.794\quad}$ m。代入式(3)得波长 $\lambda_{\text{exp}} = \underline{\quad588.861 \cdot 10^{-9}\quad}$ $m= \underline{\quad 588.861 \quad}$ nm ,误差:
+
+		$$ W=\frac{\lambda_exp - \lambda_the}{\lambda_the}=0.74 \% $$
+
+	\subsection{光源单色性影响研究}
+	\begin{itemize}
+		\item \textbf{纯 LED 源}：光谱带宽 $\Delta \lambda$ 较大（约 \SI{30}{nm}），观察到中央几级条纹清晰，边缘迅速变模糊。
+		\item \textbf{加滤色片后}：光谱被窄化，相干长度 $l_c$ 增加，可观察到的条纹数目明显增多，对比度提升。
+	\end{itemize}
+	
+	\section{结论与误差分析}
+	\subsection{主要误差来源}
+	1. \textbf{原理误差}：$h$ 的测量公式基于薄透镜近似。\\
+	2. \textbf{读数误差}：CCD 图像边缘存在噪声，影响像素定位。\\
+	3. \textbf{系统误差}：光轴调节不完全共轴导致的条纹畸变。
+	
+	\subsection{结论}
+	本实验利用线性拟合有效提高了波长测量精度。实验证明了光源单色性与干涉场深度（相干长度）的正相关性。
+	
+	\begin{thebibliography}{99}
+		\bibitem{1} 北京师范大学物理实验教学中心. 普通物理实验讲义 II [M]. 2026.
+	\end{thebibliography}
+	
+\end{document}
