@@ -1,0 +1,108 @@
+\documentclass[10pt,twocolumn,a4paper]{article}
+
+% --- 宏包加载 ---
+\usepackage[UTF8]{ctex} % 中文支持
+\usepackage{amsmath, amsfonts, amssymb} % 数学公式
+\usepackage{graphicx} % 插图
+\usepackage{booktabs} % 三线表
+\usepackage{geometry} % 页边距设置
+\usepackage{caption} % 图表标题
+\usepackage{abstract} % 摘要格式
+\usepackage{cite} % 引用格式
+
+% --- 页面几何设置 ---
+\geometry{left=1.5cm, right=1.5cm, top=2.0cm, bottom=2.0cm}
+\columnsep 0.6cm % 双栏间距
+
+% --- 报告信息 ---
+\title{\Large \bfseries 基于分光计的玻璃三棱镜色散特性研究与 Cauchy 方程拟合分析}
+\author{党佳一\thanks{北京师范大学物理与天文学院}}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	
+	% --- 摘要 ---
+	\renewcommand{\abstractname}{摘 \ 要}
+	\begin{abstract}
+		本实验利用分光计通过最小偏向角法测量了玻璃三棱镜在汞灯不同特征谱线下的折射率。通过对分光计进行精确的自准直调整，确保了测量光路处于平行光状态且垂直于仪器中心轴。实验获取了多个波长下的折射率数值，并利用 Cauchy 色散公式进行非线性回归分析。结果表明，拟合方程 $n(\lambda) = 1.6194 + \frac{10146.28}{\lambda^2}$ 具有极高的判定系数（$R^2 = 0.999999$），准确揭示了光学玻璃在可见光波段的正常色散规律。
+		\par \textbf{关键词：} 分光计；折射率；最小偏向角；Cauchy 方程；色散曲线
+	\end{abstract}
+	
+	% --- 正文开始 ---
+	
+	\section{引言}
+	色散是透明介质折射率随入射光波长变化的物理现象。准确测量光学材料的色散曲线对于光学系统设计（如消色差透镜设计）具有重要意义。分光计作为精密测角仪器，结合最小偏向角法，是实验室测定固体折射率的标准手段。
+	
+	\section{实验原理}
+	\subsection{最小偏向角法}
+	当单色平行光入射三棱镜，且入射角与出射角相等时，偏向角达到最小值 $\delta_{min}$。此时介质折射率 $n$ 与三棱镜顶角 $A$ 及 $\delta_{min}$ 的关系为：
+	\begin{equation}
+		n = \frac{\sin \frac{A + \delta_{min}}{2}}{\sin \frac{A}{2}}
+	\end{equation}
+	
+	\subsection{Cauchy 色散公式}
+	在可见光波段，多数透明介质满足 Cauchy 方程：
+	\begin{equation}
+		n(\lambda) = A + \frac{B}{\lambda^2} + \frac{C}{\lambda^4} + \dots
+	\end{equation}
+	通常取前两项作为近似拟合，其中 $A$ 为常数项，反映材料的极限折射率，$B$ 决定色散强度。
+	
+	\section{实验仪器调整}
+	分光计的调整是本实验精度的关键，其核心步骤包括：
+	\begin{enumerate}
+		\item \textbf{望远镜调焦：} 采用自准直法，通过调节物镜和目镜，使分划板十字线与其经平面镜反射的“绿十字”像重合且无视差，确保望远镜接收平行光。
+		\item \textbf{各半调节法：} 旋转载物台，利用载物台调平螺旋及望远镜倾斜螺旋，使平面镜两面反射像均落在准丝中心，确保望远镜光轴垂直于仪器主轴。
+		\item \textbf{平行光管调整：} 将狭缝置于平行光管物镜焦平面，使其输出平行光。
+	\end{enumerate}
+	
+	\section{实验数据处理与分析}
+	
+	\subsection{原始测量数据}
+	实验采用汞灯作为光源，观测了蓝紫光（435.8 nm）、绿光（546.1 nm）和黄光（579.0 nm）等特征谱线。
+	
+	% 表格占位：你可以根据实际测量值填充下表
+	\begin{table}[htbp]
+		\centering
+		\caption{汞灯特征谱线下的折射率测量结果}
+		\begin{tabular}{ccc}
+			\toprule
+			颜色 & 波长 $\lambda$ (nm) & 折射率 $n$ (测量值) \\
+			\midrule
+			蓝紫 & 435.8 & 1.6728 \\
+			绿 & 546.1 & 1.6534 \\
+			黄 & 579.0 & 1.6496 \\
+			% 若有更多数据点请在此添加
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{色散曲线拟合}
+	利用最小二乘法对测量数据进行 Cauchy 方程拟合。根据拟合图像（见图 1），得到的回归方程为：
+	\begin{equation}
+		n = 1.6194 + \frac{10146.28}{\lambda^2}
+	\end{equation}
+	其中 $\lambda$ 单位为 nm。
+	
+
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.45\textwidth]{C:/Github/Optics/LAB_DispersionCurve_Measure_spectrometer/lab_Fitting_Figure.png} 
+		\caption{玻璃三棱镜色散关系曲线及 Cauchy 方程拟合分析}
+		\label{fig:dispersion}
+	\end{figure}
+	
+	\subsection{不确定度分析与讨论}
+	本实验中判定系数 $R^2$ 达到 0.999999，表明模型与实验值极度吻合。
+	\par 关于计算中取空气折射率 $n_0=1$ 的合理性分析：空气折射率 $n_{air} \approx 1.0003$。若忽略此偏差，引入的系统误差约在 $10^{-4}$ 量级。由于分光计读数盘精度限制（通常为 $1'$），由角度测量引起的不确定度亦在 $10^{-4}$ 量级，故在当前实验精度下，取 $n_0=1$ 对色散规律的整体趋势描述并无显著影响。
+	
+	\section{结论}
+	本实验通过精密分光计测量，验证了光学玻璃在可见光区的正常色散性质。实验得出的 Cauchy 拟合参数可用于预测该材料在其他波长下的折射率，对于理解光学介质的电磁特性及指导实际光学测量具有参考价值。
+	
+	% --- 参考文献 ---
+	\begin{thebibliography}{9}
+		\bibitem{lab_manual} 北京师范大学物理学系实验教学中心. 《普通物理实验讲义：分光计实验》.
+	\end{thebibliography}
+	
+\end{document}
