@@ -13,7 +13,9 @@
 * **[Hall Effect Sensor](./Electricity_and_Magnetism/LAB/LAB_hall_effect_sensor)**: 利用霍尔效应探究磁感应强度 $B$等。
 * **[Reactive Resistance Deduce](./Electricity_and_Magnetism/Ideas/reactive_resistance_deduce.md)**: **科普文**  交流电路分析：基于相量变换的阻抗与时域模型 。
 * **[Millikan OilDrop for Measuring Elementary charge](./Electricity_and_Magnetism/LAN/LAB_millikan_oildrop_elementary_charge)** :利用密里根油滴法测量油滴的电荷量并探究电荷分立的量子化特征。
+###   [Optics(光学)]（./Optics）
 * **[Fresnel Biprism Interference](./Optics/LAB_Fresnel_Biprism_Interference)**:基于菲涅尔双棱镜研究双光束干涉。
+* **[Dispersion Curve of Glass Measured by Spetrometer](./Optics/LAB_DispersionCurve_Measure_spectrometer)**:使用分光计测量玻璃的色散曲线。
 ##   核心实验逻辑 (Core Physics Logic)
 
 ### 1. RLC 谐振拟合
