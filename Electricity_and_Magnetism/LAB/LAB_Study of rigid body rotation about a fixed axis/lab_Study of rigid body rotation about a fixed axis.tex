@@ -1,0 +1,189 @@
+\documentclass[11pt, a4paper, twocolumn]{article}
+\usepackage[top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm, columnsep=0.8cm]{geometry}
+
+% --- 核心替换方案：移除 babel，使用 xeCJK ---
+\usepackage{fontspec}
+\usepackage{xeCJK}
+
+% 设置西文字体 (对应原代码的 Noto Sans)
+\setmainfont{Noto Sans}
+% 设置中文字体 (对应原代码的 Noto Sans CJK SC)
+% 如果你的系统中没有这两个字体，请替换为系统已安装的字体名称，如 "Microsoft YaHei" 或 "SimSun"
+\setCJKmainfont{SimSun}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+
+\title{\LARGE \bfseries 刚体定轴转动与平行轴定理的实验验证}
+\author{
+	\begin{tabular}[t]{c@{\extracolsep{2em}}c}
+		党佳一 & 郑皓芝 \\
+		202511101093 & 202511101099
+	\end{tabular}
+}
+\date{\today}
+
+\begin{document}
+	
+	\twocolumn[
+	\maketitle
+	\begin{center}
+		\Large \bfseries 摘\ 要
+	\end{center}
+	\vspace{-0.5em}
+	\begin{quote}
+		\normalsize
+		本实验采用落重法测定刚体的转动惯量，并通过改变配重块的位置验证了平行轴定理。实验中分别测量了牵引砝码下降和上升时的角加速度，利用差值法有效消除了恒定摩擦力矩的影响。当配重块处于中心（外侧距 52.46 mm）和外移状态（外侧距 126.3 mm）时，通过多次改变砝码质量求平均，测得系统的转动惯量分别为 $3.663 \times 10^{-3}\text{ kg}\cdot\text{m}^2$ 和 $3.98 \times 10^{-3}\text{ kg}\cdot\text{m}^2$。实验测得的纯转动惯量增量为 $0.317 \times 10^{-3}\text{ kg}\cdot\text{m}^2$，与考虑配重块厚度修正后的理论增量 $0.3066 \times 10^{-3}\text{ kg}\cdot\text{m}^2$ 相比，相对误差为 3.39\%。实验结果在合理误差范围内较好地验证了平行轴定理。
+	\end{quote}
+	\vspace{1.5em}
+	]
+	
+	\section{实验目的}
+	\begin{enumerate}[label=\arabic*., leftmargin=*]
+		\item 掌握运用动力学方法（落重法）测定刚体转动惯量的基本原理，考察系统摩擦力矩对正反向运动的影响。
+		\item 测量不同质量分布下的刚体转动惯量，定量验证平行轴定理。
+	\end{enumerate}
+	
+	\section{实验原理与推导}
+	
+	\subsection{动力学测定原理}
+	在本实验中，系统由悬挂的牵引砝码（质量为 $m_e$）通过绕在半径为 $r_0$ 的塔轮上的细线驱动刚体转动。设系统总转动惯量为 $I$，细线拉力为 $T$，轴承摩擦力矩为 $T_r$。
+	
+	\textbf{1. 下降加速阶段：}
+	当砝码下降时，根据牛顿第二定律，砝码的平动方程为：
+	\begin{equation}
+		m_e g - T = m_e a
+	\end{equation}
+	对于转动刚体，转动定律方程为：
+	\begin{equation}
+		T r_0 - T_r = I \beta
+	\end{equation}
+	结合运动学约束 $a = \beta r_0$，消去拉力 $T$，可得下降阶段的动力学方程：
+	\begin{equation}
+		m_e r_0 (g - \beta r_0) - T_r = I \beta \label{eq:down}
+	\end{equation}
+	
+	\textbf{2. 上升减速阶段：}
+	当施加外力使塔轮反转使砝码上升时，摩擦力矩 $T_r'$ 方向反转，与重力矩协同作为阻力矩。设此时上升角加速度为 $\beta'$（实验记录中 $\beta' < 0$）。假设干摩擦恒定，即 $T_r' \approx T_r$，可推导出：
+	\begin{equation}
+		T_r - m_e r_0 (g - \beta' r_0) = I \beta' \label{eq:up}
+	\end{equation}
+	
+	\textbf{3. 消除摩擦力矩计算转动惯量：}
+	将式 \eqref{eq:down} 与式 \eqref{eq:up} 相减以消去摩擦力矩 $T_r$，整理得出计算公式：
+	\begin{equation}
+		I = \frac{2 m_e g r_0}{\beta - \beta'} - m_e r_0^2 \label{eq:I}
+	\end{equation}
+	公式中尾项 $m_e r_0^2$ 为牵引砝码折算到转轴的等效惯量。
+	
+	\subsection{平行轴定理与修正模型}
+	平行轴定理指出，刚体绕任意轴的转动惯量 $I$ 等于其绕平行质心轴的转动惯量 $I_c$ 加上 $m d^2$。
+	
+	设单侧配重块质量为 $m_{\text{块}}$，厚度为 $H$。当测得两配重块\textbf{外侧距离}为 $D$ 时，质心到转轴的真实几何距离 $d$ 为：
+	\begin{equation}
+		d = \frac{D - H}{2}
+	\end{equation}
+	通过比较中心状态（外侧距 $D_0$）与展开状态（外侧距 $D_1$）的转动惯量差值，理论增量方程为：
+	\begin{equation}
+		\Delta I_{theor} = 2 m_{\text{块}} \left[ \left(\frac{D_1 - H}{2}\right)^2 - \left(\frac{D_0 - H}{2}\right)^2 \right] \label{eq:parallel}
+	\end{equation}
+	
+	\section{实验数据与处理}
+	
+	\subsection{已知系统参数}
+	\begin{itemize}
+		\item 局域重力加速度：$g = 9.80\text{ m/s}^2$
+		\item 塔轮绕线槽半径：$r_0 = 0.090\text{ m}$
+		\item 单配重块质量：$m_{\text{块}} = 72.37\text{ g} = 0.07237\text{ kg}$
+		\item 配重块厚度：$H = 32.0\text{ mm} = 0.0320\text{ m}$
+	\end{itemize}
+	
+	\subsection{中心状态测定 ($D_0 = 52.46\text{ mm}$)}
+	在该状态下，利用 4 组不同质量的牵引砝码分别测量上升和下降的角加速度。代入式 \eqref{eq:I} 计算得出对应的转动惯量，数据如表1所示。
+	
+	\begin{table}[H]
+		\centering
+		\caption{中心状态下角加速度与转动惯量测量值}
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{lcccc}
+				\toprule
+				组别 & $m_e \text{ (g)}$ & $\beta \text{ (rad/s}^2\text{)}$ & $\beta' \text{ (rad/s}^2\text{)}$ & $I \text{ (}10^{-3}\text{ kg}\cdot\text{m}^2\text{)}$ \\
+				\midrule
+				1 & 5.01 & 0.982 & -1.33 & 3.812 \\
+				2 & 9.96 & 2.08 & -2.67 & 3.633 \\
+				3 & 24.90 & 4.82 & -6.40 & 3.719 \\
+				4 & 39.72 & 8.54 & -9.87 & 3.488 \\
+				\bottomrule
+			\end{tabular}
+		}
+	\end{table}
+	
+	四组数据的平均转动惯量为：
+	\begin{equation}
+		\overline{I_0} = 3.663 \times 10^{-3}\text{ kg}\cdot\text{m}^2
+	\end{equation}
+	
+	\subsection{外移状态测定 ($D_1 = 126.3\text{ mm}$)}
+	将两配重块向外侧平移至 $D_1 = 126.3\text{ mm}$ 处，采用两组砝码进行测量，数据记录如表2所示。
+	
+	\begin{table}[H]
+		\centering
+		\caption{外移状态下角加速度与转动惯量测量值}
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{lcccc}
+				\toprule
+				组别 & $m_e \text{ (g)}$ & $\beta \text{ (rad/s}^2\text{)}$ & $\beta' \text{ (rad/s}^2\text{)}$ & $I \text{ (}10^{-3}\text{ kg}\cdot\text{m}^2\text{)}$ \\
+				\midrule
+				1 & 24.90 & 5.02 & -5.99 & 3.99 \\
+				2 & 39.72 & 8.08 & -9.59 & 3.97 \\
+				\bottomrule
+			\end{tabular}
+		}
+	\end{table}
+	
+	计算得出该状态下的平均转动惯量为：
+	\begin{equation}
+		\overline{I_1} = 3.98 \times 10^{-3}\text{ kg}\cdot\text{m}^2
+	\end{equation}
+	
+	\subsection{实验增量提取}
+	通过作差消去本底惯量，纯实验转动惯量增量为：
+	\begin{align}
+		\Delta I_{exp} &= \overline{I_1} - \overline{I_0} \notag \\
+		&= (3.98 - 3.663) \times 10^{-3} \notag \\
+		&= 0.317 \times 10^{-3}\text{ kg}\cdot\text{m}^2
+	\end{align}
+	
+	\section{平行轴定理验证与误差分析}
+	
+	\subsection{理论增量计算}
+	根据式 \eqref{eq:parallel} 进行理论刚体平移增量求解：
+	\begin{align}
+		\Delta I_{theor} &= 2 \times 0.07237 \times \notag \\
+		&\quad \left[ \left(\frac{0.1263 - 0.032}{2}\right)^2 - \left(\frac{0.05246 - 0.032}{2}\right)^2 \right] \notag \\
+		&= 0.14474 \times [0.04715^2 - 0.01023^2] \notag \\
+		&= 0.14474 \times 0.0021184 \notag \\
+		&= 0.3066 \times 10^{-3}\text{ kg}\cdot\text{m}^2
+	\end{align}
+	
+	\subsection{误差计算}
+	实验值与理论值的相对误差 $E_r$ 为：
+	\begin{equation}
+		E_r = \frac{|\Delta I_{exp} - \Delta I_{theor}|}{\Delta I_{theor}} \times 100\% = 3.39\%
+	\end{equation}
+	
+	\subsection{误差来源探讨}
+	相对误差较小（3.39\%），主要系统误差来源包括：
+	\begin{enumerate}
+		\item \textbf{绕线重叠的影响：} 塔轮半径 $r_0$ 较大，细线缠绕时容易发生重叠，导致实际作用的拉力力臂略大于 $r_0$，使计算所得的转动惯量偏大。
+		\item \textbf{非理想质点效应：} 理论增量公式将配重块简化为质心处的质点。实际上，配重块具有物理体积，在平移过程中自身绕质心的转动惯量也会引入轻微误差。
+	\end{enumerate}
+	
+	\section{结论}
+	本实验通过落重法测定了不同牵引质量下系统的转动惯量，并通过改变配重块位置验证了平行轴定理。实验测得的转动惯量增量为 $0.317 \times 10^{-3}\text{ kg}\cdot\text{m}^2$，与理论增量 $0.3066 \times 10^{-3}\text{ kg}\cdot\text{m}^2$ 的相对误差为 3.39\%。误差分析表明，细线缠绕力臂偏差和刚体体积效应是主要的误差来源。总体而言，实验数据在合理的误差范围内较好地验证了平行轴定理，达到了实验目的。
+	
+\end{document}

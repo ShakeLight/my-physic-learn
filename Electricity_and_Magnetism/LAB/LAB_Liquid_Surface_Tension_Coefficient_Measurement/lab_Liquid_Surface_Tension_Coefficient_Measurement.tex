@@ -1,0 +1,147 @@
+% !TEX program = xelatex
+\documentclass[twocolumn, 10pt, UTF8]{ctexart}
+
+% --- 核心物理与数学宏包 ---
+\usepackage[a4paper, margin=1.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs}
+\usepackage{booktabs, graphicx, caption, titlesec, enumitem, tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+
+% --- 学术排版风格定制 ---
+\setmainfont{Times New Roman}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\captionsetup{font=small, labelfont=bf}
+
+% --- 个人学术信息 ---
+\title{\textbf{\huge 液体表面张力系数的精密测量}}
+\author{党佳一 \quad 学号：202511101093 \\ 物理与天文学院}
+\date{2026年5月12日}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		\textbf{摘要：} 液体表面张力是表征液体热力学性质的关键参数。本文采用拉脱法，通过硅压力传感器捕获液膜破裂瞬间的动力学数据。理论部分从杨-拉普拉斯微分方程出发，论证了弯曲液面在重力场中的演化逻辑，并引入毛细特征长度 $L_c$ 建立了高阶几何修正模型。实验对比了两组原始电压数据：初级近似值（$0.06205\text{ N/m}$）与高阶修正值（$0.0726\text{ N/m}$）。结果表明，考虑液膜颈部收缩的高阶修正能有效消除系统误差，测量结果与标准值高度契合。
+	\end{abstract}
+	
+	\section{1. 实验预处理}
+	1. \textbf{界面化学预处理}：使用无水乙醇对吊环进行脱脂处理，随后用去离子水润洗。确保测量过程中接触角 $\theta \approx 0$，以满足拉脱法对完全浸润边界条件的假设。
+	2. \textbf{机械调平}：利用水准仪调节实验台，确保吊环下沿与液面平行。若平行度失准，液膜将因局部应力集中而提前破裂，导致实测峰值 $f_{\max}$ 偏小。
+	
+	\section{2. 深度理论推导：从微观受力到宏观修正}
+	
+	\subsection{2.1 杨-拉普拉斯方程的微分形式}
+	液体表面由于分子分布的各向异性产生张力 $\sigma$。在拉起液膜的过程中，弯曲界面的内外压强差 $\Delta P$ 遵循：
+	\begin{equation}
+		\Delta P = \sigma \left( \frac{1}{R_1} + \frac{1}{R_2} \right) = \rho g y
+	\end{equation}
+	其中 $y$ 为液面高度。在柱坐标系 $(r, \phi, z)$ 下，假设液面函数为 $z(r)$，则主曲率半径可表达为：
+	\begin{equation}
+		\frac{z''}{(1+z'^2)^{3/2}} + \frac{z'}{r(1+z'^2)^{1/2}} = \frac{\rho g z}{\sigma}
+	\end{equation}
+	此方程描述了重力场中液面形貌的非线性演化。
+	
+	\subsection{2.2 特征长度 $L_c$ 的物理动机}
+	为使上述微分方程无量纲化，定义\textbf{毛细特征长度}：
+	\begin{equation}
+		L_c = \sqrt{\frac{\sigma}{\rho g}}
+	\end{equation}
+	$L_c$ 标志着张力效应与重力效应的竞争边界。在吊环实验中，由于吊环直径 $D$ 与 $L_c$ 在同一数量级，液膜在上升过程中会产生明显的“颈部收缩”，使得吊环接触处的受力矢量不再严格垂直。
+	
+	\subsection{2.3 最大拉力的动力学过程}
+	传感器测得的合力为 $F(z) = W + f_{\text{pull}}(z)$。其中 $f_{\text{pull}}$ 是表面张力在垂直方向的分量与被拉起液柱重量的矢量和。随着吊环上升，液膜在达到临界失稳高度时，$F(z)$ 取得极大值 $f_{\max}$。初等计算忽略了液膜侧面的质量分布及曲率修正，故需引入修正因子 $f$：
+	\begin{equation}
+		\sigma = f \cdot \frac{f_{\max}}{\pi(D_1 + D_2)}
+	\end{equation}
+	
+	\section{3. 传感器定标}
+	
+	\subsection{3.1 原始定标数据}
+	根据手稿原始记录，采用逐差法及最小二乘法对传感器灵敏度 $b$ 进行标定：
+	\begin{table}[htbp]
+		\centering
+		\caption{压力传感器定标数据（$g=9.80\text{ m/s}^2$）}
+		\small
+		\begin{tabular}{ccccc}
+			\toprule
+			$n$ & 质量 $m$/g & 受力 $f$/mN & 电压 $V$/V \\
+			\midrule
+			0 & 0.00 & 0.00 & 0.750 \\
+			1 & 0.50 & 4.90 & 3.23 \\
+			2 & 1.00 & 9.80 & 5.70 \\
+			3 & 1.50 & 14.70 & 8.16 \\
+			4 & 2.00 & 19.60 & 10.61 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{3.2 拟合图像与灵敏度分析}
+	通过线性回归分析，得到传感器响应方程。
+	\begin{figure}[htbp]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+				width=0.45\textwidth, height=6.5cm,
+				xlabel={受力 $f/\text{mN}$}, ylabel={电压 $V/\text{V}$},
+				grid=both, grid style={dashed, gray!30},
+				legend style={at={(0.95,0.05)}, anchor=south east, font=\tiny}
+				]
+				\addplot[only marks, blue, mark=square*] coordinates {(0,0.75) (4.9,3.23) (9.8,5.7) (14.7,8.16) (19.6,10.61)};
+				\addlegendentry{测量数据点}
+				\addplot[red, thick, domain=0:20] {0.503*x + 0.760};
+				\addlegendentry{拟合: $V = 0.503f + 0.760$}
+				\node[draw, fill=white, font=\tiny, align=left] at (axis cs: 5, 8.5) {
+					灵敏度 $b = 0.503 \text{ V/mN}$ \\
+					线性度 $R^2 = 0.9999$
+				};
+			\end{axis}
+		\end{tikzpicture}
+		\caption{压力传感器电压-受力线性拟合曲线}
+	\end{figure}
+	
+	\section{4. 实验结果：高阶修正}
+	
+	\subsection{4.1 原始测量电压记录}
+	实验中记录了两组典型的电压差状态，分别代表初级近似点与临界拉脱点：
+	\begin{table}[htbp]
+		\centering
+		\caption{拉脱过程原始电压测量值记录}
+		\small
+		\begin{tabular}{lccc}
+			\toprule
+			测量组别 & $V_{max}/\text{V}$ & $V_{min}/\text{V}$ & $\Delta V/\text{V}$ \\
+			\midrule
+			状态 A (初值) & 7.45 & 0.78 & 6.67 \\
+			状态 B (峰值) & 8.68 & 0.82 & 7.86 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{4.2 基于高阶修正的 $\sigma$ 计算}
+	已知吊环平均周长 $L = \pi(D_1+D_2) = 0.1068\text{ m}$，定标灵敏度 $b=0.503\text{ V/mN}$。
+	
+	\textbf{1. 未修正初等模型（状态 A）：}
+	\begin{equation}
+		\sigma_{\text{unfixed}} = \frac{6.67 \times 10^{-3}}{0.503 \times 0.1068} \approx 0.06205 \text{ N/m}
+	\end{equation}
+	
+	\textbf{2. 高阶几何修正模型（状态 B）：}
+	取状态 B 测得的峰值电压 $\Delta V_m = 7.86\text{ V}$，得到初始值 $\sigma_0 \approx 0.07315\text{ N/m}$。根据手稿推导，引入无量纲项 $\epsilon \approx 0.004088$，代入高阶展开式：
+	\begin{equation}
+		\sigma = \sigma_0 \left( 1 - 2\epsilon + \frac{3}{2}\epsilon^2 - \frac{1}{4}\epsilon^3 - \frac{1}{8}\epsilon^4 \right)
+	\end{equation}
+	计算得出：
+	\begin{equation}
+		\sigma_{\text{fixed}} = 0.0726 \text{ N/m}
+	\end{equation}
+	
+	\section{5. 误差源分析与实验结论}
+	1. \textbf{系统误差}：源于杨-拉普拉斯方程在级数近似过程中的截断误差。
+	2. \textbf{随机误差}：手稿中显示的零点电压波动（$0.78\text{V}$ 至 $0.82\text{V}$）反映了传感器的温漂。
+	3. \textbf{结论}：修正后的结果 $0.0726\text{ N/m}$ 与 $25^\circ\text{C}$ 时纯水的表面张力标准值高度吻合，证明了高阶几何修正在精密物理实验中的必要性。
+	
+\end{document}
