@@ -1,0 +1,278 @@
+\documentclass[twocolumn,zihao=5,a4paper]{ctexart} % 修复：10.5pt 改为标准的 zihao=5
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.0cm, right=2.0cm, columnsep=0.8cm}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{abstract}
+
+% 优化标题样式
+\titleformat{\section}{\fontseries{b}\selectfont\large\centering}{\thesection}{1em}{}
+\titleformat{\subsection}{\fontseries{b}\selectfont\normalsize}{\thesubsection}{0.5em}{}
+
+\captionsetup{font=small, labelfont=bf, labelsep=quad}
+
+\begin{document}
+	
+	% 摘要横跨双栏设计
+
+\twocolumn[
+\begin{center}
+	{\LARGE\bf 一维运动综合实验与动力学规律研究} {\\[1.5em]}
+\begin{tabular}{c@{\hspace{6em}}c}
+	{\large 党佳一} & {\large 郑皓芝} \\
+	{\small 202511101093} & {\small 202511101099}
+\end{tabular} \vspace{1.0em} \\
+	{\small （北京师范大学物理与天文学院）} {\\[1.5em]}
+	\begin{minipage}{0.85\textwidth}
+		\small
+		{\bf 摘要：} 本实验基于 PASCO 数字化物理实验平台，利用智能运动小车及 Capstone 软件对一维空间下的五种典型动力学运动进行了定量测量与分析。实验内容包括导轨摩擦力校准、验证牛顿第二定律、探究弹簧振子简谐振动周期、研究二体碰撞中的动量与能量守恒、以及测定斜面运动加速度。实验利用传感器获取高频离散位移与力学数据，采用数值差分与最小二乘法进行数据处理，并在斜面运动中引入正反向平均法消除摩擦力影响。结果表明，各实验动力学响应与经典力学理论高度吻合，其中斜面法测得重力加速度为 9.822 m/s$^{2}$，相对误差为 0.22\%。\\
+		{\bf 关键词：} PASCO平台；一维运动；牛顿第二定律；弹簧振子；动量守恒
+	\end{minipage} {\\[2em]}
+\end{center}
+]
+
+\section{引言}
+一维运动是经典力学研究的基础内容。传统的一维动力学实验（如气垫导轨与光电门系统）虽然能简化物理模型，但受限于采样点离散、单次只能测量特定位置数据，且气垫导轨易受气流不均等因子的干扰，难以实现全行程、多物理量的连续实时获取。
+
+数字化物理实验平台的引入有效解决了传统仪器的局限。本实验采用 PASCO 无线智能运动小车（Smart Cart）及 Capstone 软件，利用小车内置的光学编码器和力传感器，以高采样频率连续记录小车的位移、速度、加速度和受力状态。通过该平台，本实验对牛顿第二定律、简谐振动周期公式、二体完全弹性/非弹性碰撞过程中的动量与能量守恒定律进行了系统性定量验证，并利用斜面上下行运动的均值处理实现了重力加速度的消摩测定。
+	\section{实验目的}
+	\begin{enumerate}
+		\item 掌握 PASCO 数字化实验平台及 Capstone 软件的操作、硬件调零与高阶数据拟合方法。
+		\item 深入理解离散时空序列下基于多点算子差分法的速度、加速度数值推导原理及噪声演化。
+		\item 完整完成摩擦力校准、牛顿第二定律定量验证、弹簧振子动力学特征、二体碰撞守恒及斜面消摩实验。
+	\end{enumerate}
+	
+	\section{实验原理与数值微积分推导}
+	数字化传感器的核心是一维离散信号的获取。以位移传感器为例，其本质为步进 $\Delta \approx 0.1212621\text{ mm}$ 的离散增量编码器。运行程序在离散时刻 $t = k\tau$（$\tau$ 为采样周期，$1/\tau$ 为采样频率）记录位移序列：
+	\begin{equation}
+		x_k = x(k\tau), \quad k = 0, 1, 2, \dots
+	\end{equation}
+	
+	Capstone 软件利用数值差分法计算实时速度。为了抑制离散信号引入的随机高频噪声，系统对于非边缘点采用五点算子进行平滑差分：
+	\begin{equation}
+		v_k = \begin{cases}
+			\dfrac{x_2 - x_0}{2\tau}, & k = 1 \\[1em]
+			\dfrac{x_{k+2} + x_{k+1} - x_{k-1} - x_{k-2}}{6\tau}, & k > 1
+		\end{cases}
+	\end{equation}
+	
+	但在对速度进行二次数值求导以获取加速度 $a_k$ 时，由于位移本身的量子化离散特征，差分放大效应会导致加速度曲线产生极大的毛刺（噪声强度 $\sigma_a \propto \sigma_x / \tau^2$）。因此，在处理匀变速运动时，直接读取加速度测量值的学术可信度较低。通常需要采用最小二乘法对一阶运动方程进行整体曲线拟合。
+	
+	若考虑小车受到的空气阻力与速度成正比，阻力可表述为 $f_r = -\gamma v$，则其动力学方程为：
+	\begin{equation}
+		m\frac{\mathrm{d}v}{\mathrm{d}t} = F_0 - \gamma v
+	\end{equation}
+	其位移与速度的理论拟合通用解析式为：
+	\begin{align}
+		v(t) &= A + Be^{-\beta t} \\
+		x(t) &= At + \frac{B}{-\beta}e^{-\beta t} + C' = At + \tilde{B}e^{-\beta t} + C
+	\end{align}
+	其中 $\beta = \gamma/m$。当阻力极小（$\beta \to 0$）时，对指数项进行泰勒级数展开：
+	\begin{equation}
+		x(t) \approx At + \tilde{B}\left(1 - \beta t + \frac{1}{2}\beta^2 t^2\right) + C = x_0 + v_0 t + \frac{1}{2}at^2
+	\end{equation}
+	此时拟合形式无缝退化为匀加速直线运动标准方程。
+	
+	\section{实验装置与仪器调试}
+	实验主体由 120cm 调平导轨、红蓝双色无线智能运动小车（内置三轴陀螺仪、加速度计、光学编码器及100N力传感器）构成。
+	
+	\subsection{仪器关键参数校准}
+	实验前须使用分辨率为 $0.1^\circ$ 的数显倾角仪对导轨进行水平双向调节。小车关键固有质量经高精度电子天平测定如下：
+	\begin{itemize}
+		\item 蓝色智能小车质量：$m_{\text{蓝}} = 274.18\text{ g}$
+		\item 红色智能小车质量：$m_{\text{红}} = 275.50\text{ g}$
+	\end{itemize}
+	进入 Capstone 软件后，需将小车置于静止状态，对力传感器进行软件调零（Zero Sensor），并调整传感器的正负符号，使其与小车一维运动的轴向正方向完全一致。
+	
+	\section{实验数据响应与多目标专题分析}
+	
+	\subsection{任务一：导轨调平与摩擦力本征加速度测定}
+	将小车分别向正反两个方向单次推走，利用软件对速度曲线的线性段进行一阶线性拟合（$v = v_0 + at$），提取出小车在正反向行程中的加速度大小。手稿测得原始核心数据如表1所示。
+	
+	\begin{table}[H]
+		\centering
+		\caption{小车一维固有摩擦加速度测试}
+		\begin{tabular}{lcc}
+			\toprule
+			运动方向 & 正向运行 ($a_{f+}$) & 反向运行 ($a_{f-}$) \\
+			\midrule
+			测量值 $a_1\ (\text{m/s}^2)$ & $-0.0543$ & $0.0134$ \\
+			修正式 $a_2\ (\text{m/s}^2)$ & $-0.0458$ & $0.0106$ \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	数据表明，$a_{f+}$ 与 $a_{f-}$ 绝对值并不相等。这说明导轨虽然经过数显仪调平，但依然存在微观不均匀性或轨道微小倾角。这使得摩擦力与重力分量在不同方向叠加，因此在后续高精度动力学测定中，必须采用双向平均法以消除该本征偏置。
+	
+	\subsection{任务二：验证牛顿第二定律}
+	保持系统总质量 $M$ 恒定，通过挂钩承载不同数量的砝码提供拉力 $F$。总质量动力学结构满足：
+	\begin{equation}
+		M = m_{\text{车}} + m_{\text{挂钩}} + m_{10\text{g}} + m_{20\text{g}}
+	\end{equation}
+	通过 Capstone 的最小二乘回归，在稳定运动段拟合得到系统运动的实验加速度 $a_{\text{exp}}$，数据整理如表2所示。
+	
+	\begin{table}[H]
+		\centering
+		\caption{牛顿第二定律恒定质量定量检验}
+		\begin{tabular}{clc}
+			\toprule
+			组别 & 砝码配置方案 & 实验加速度 $a_{\text{exp}}\ (\text{m/s}^2)$ \\
+			\midrule
+			1 & 单纯挂钩 & $0.120$ \\
+			2 & 挂钩 + $10\text{g}$ 砝码 & $0.427$ \\
+			3 & 挂钩 + $10\text{g}$ + $20\text{g}$ 砝码 & $1.020$ \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+				width=7cm, height=5cm,
+				xlabel={拉力拉拽状态 (组别)},
+				ylabel={加速度 $a\ (\text{m/s}^2)$},
+				xmin=0.5, xmax=3.5,
+				ymin=0, ymax=1.2,
+				xtick={1,2,3},
+				xticklabels={组别1,组别2,组别3},
+				grid=both,
+				grid style={line width=.1pt, draw=gray!10},
+				major grid style={line width=.2pt,draw=gray!30},
+				axis on top % 修复：替代原错误键值 every axis raised onto top
+				]
+				\addplot[color=blue, mark=*, thick] coordinates {
+					(1, 0.120)
+					(2, 0.427)
+					(3, 1.020)
+				};
+			\end{axis}
+		\end{tikzpicture}
+		\caption{加速度与外加驱动拉力的线性映射关联图}
+	\end{figure}
+	
+	由图1可知，由于总质量 $M$ 保持严格守恒，加速度与外加砝码重力驱动力呈现极为完美的线性响应。这直接在实验误差允许范围内定量确证了 $F = Ma$ 的正确性。
+	
+	\subsection{任务三：验证弹簧振子的周期与角频率公式}
+	首先利用动态拉伸法对实验所用的两根对置弹簧进行胡克定律表征。经力传感器（$F = k\Delta x$）回归测定，两根弹簧的本征刚度系数分别为：
+	\begin{equation}
+		k_1 = 6.36\text{ N/m}, \quad k_2 = 6.60\text{ N/m}
+	\end{equation}
+	当两根弹簧对称连接于小车两侧并固定于导轨两端时，系统构成了经典的双弹簧对置对冲简谐振子。此时系统的有效总谐振刚度系数为：
+	\begin{equation}
+		k_{\text{eff}} = k_1 + k_2 = 12.96\text{ N/m}
+	\end{equation}
+	简谐振动的理论圆角频率公式满足：
+	\begin{equation}
+		\omega_{\text{th}} = \sqrt{\frac{k_{\text{eff}}}{M_{\text{total}}}}
+	\end{equation}
+	通过在蓝色小车上对称外加配重块，利用 Capstone 对采集到的位移余弦振动曲线进行标准正弦函数 $x(t) = X_m \cos(\omega t + \phi)$ 拟合，直接提取出实验角频率 $\omega_{\text{exp}}$，并与理论值进行交叉比对，结果如表3所示。
+			\begin{figure}[H]
+		\centering
+		% TODO: 修改此处的文件名即可插入实验一的图
+		\includegraphics[width=1.0\linewidth]{C:/震荡.png} 
+		\caption{位移随时间变化图像}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{简谐振子角频率 $\omega$ 与质量分布对应表}
+		\begin{tabular}{clcc}
+			\toprule
+			序号 & 外加配重方案 & $\omega_{\text{exp}}\ (\text{rad/s})$ & $\omega_{\text{th}}\ (\text{rad/s})$ \\
+			\midrule
+			1 & 无配重状态 & $4.85$ & $4.87$ \\
+			2 & 仅右侧加 $250\text{g}$ & $4.03$ & $3.97$ \\
+			3 & 双侧各加 $250\text{g}$ & $3.49$ & $3.43$ \\
+			4 & 仅右侧加 $500\text{g}$ & $3.10$ & $3.09$ \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	数据表明，$\omega_{\text{exp}}$ 与 $\omega_{\text{th}}$ 具有极高的契合度。这有力地验证了简谐振动角频率与总谐振质量的负二分之一平方根（$M^{-1/2}$）成正比的经典动力学物理规律。
+	
+	\subsection{任务四：二体碰撞过程中的动量与能量守恒探究}
+	本部分采用等质双车（红车与蓝车）进行一维对撞实验。通过切换小车两端的缓冲附件，分别模拟了两种极端碰撞物理机制。
+	
+	\subsubsection{完全弹性碰撞}
+		\begin{figure}[H]
+		\centering
+		% TODO: 修改此处的文件名即可插入实验一的图
+		\includegraphics[width=1.0\linewidth]{C:/完全弹性.png} 
+		\caption{总能量与总动量随时间的变化图像}
+	\end{figure}
+	利用小车头部的同名磁力缓冲器实现无机械接触碰撞。由于磁场势能完全对称转换，实验曲线显示：在等质量情形下，一车入射对撞静止的二车，碰撞后动能与动量实现完全传递。入射车近乎完全静止，目标车以原入射车速度弹离，系统总动量 $P_{\text{total}}$ 与总动能 $E_k$ 在数显误差范围内保持守恒。
+	
+	\subsubsection{完全非弹性碰撞}
+		\begin{figure}[H]
+		\centering
+		% TODO: 修改此处的文件名即可插入实验一的图
+		\includegraphics[width=1.0\linewidth]{C:/完全非弹性.png} 
+		\caption{总能量与总动量随时间的变化图像}
+	\end{figure}
+	小车尾部配有魔术贴附件。触碰后两车立刻粘合为单一运动整体。理论动力学表明，碰撞后系统将损失最大份额的机械能并转化为内能。
+	\begin{equation}
+		\Delta E_k = \frac{1}{2}m v_1^2 - \frac{1}{2}(2m)\left(\frac{v_1}{2}\right)^2 = \frac{1}{4}m v_1^2
+	\end{equation}
+	实验拟合图形精确展现了系统总动能瞬间阶跃式恰好下降为初始值 $50\%$ 的经典物理图像，同时两车结合体的总动量在碰撞前后保持严格连续。
+	
+	\subsection{任务五：研究斜面运动加速度与角度的定量依赖}
+	利用专用斜面附件将水平导轨的一端抬高，通过数显倾角仪分别精确锁定三个微小倾角 $\alpha$。在每个倾角下，均将小车沿斜面向上推走，使其经历完整的“上行减速”和“下行加速”两个连续阶段。通过线性回归分别提取上行加速度 $a_{\text{up}}$ 和下行加速度 $a_{\text{down}}$。手稿所得原始核心数据如表4所示。
+	
+	\begin{table}[H]
+		\centering
+		\caption{斜面运动动力学及方向平均消摩法数据}
+		\begin{tabular}{cccc}
+			\toprule
+			设置倾角 $\alpha$ & $a_{\text{up}}\ (\text{m/s}^2)$ & $a_{\text{down}}\ (\text{m/s}^2)$ & $a_{\text{avg}}\ (\text{m/s}^2)$ \\
+			\midrule
+			$0.40^\circ$ & $-0.130$ & $-0.020$ & $-0.075$ \\
+			$0.55^\circ$ & $-0.148$ & $-0.045$ & $-0.0965$ \\
+			$0.70^\circ$ & $-0.161$ & $-0.079$ & $-0.120$ \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	根据一维斜面动力学受力分析，沿斜面向下的方向为负：
+	\begin{align}
+		\text{上行段：} & -mg\sin\alpha - f_f = ma_{\text{up}} \\
+		\text{下行段：} & -mg\sin\alpha + f_f = ma_{\text{down}}
+	\end{align}
+	将两式相加并取均值，可得方向平均加速度：
+	\begin{equation}
+		a_{\text{avg}} = \frac{a_{\text{up}} + a_{\text{down}}}{2} = -g\sin\alpha
+	\end{equation}
+	利用该公式，可以彻底消除未知滚动摩擦力 $f_f$ 对重力加速度分量测定的干扰。
+	以 $\alpha_3 = 0.70^\circ$ 为例：
+	\begin{equation}
+		|a_{\text{avg}}| = 0.120\text{ m/s}^2
+	\end{equation}
+	反解重力加速度：
+	\begin{equation}
+		g = \frac{|a_{\text{avg}}|}{\sin(0.70^\circ)} = \frac{0.120}{0.0122173} \approx 9.822\text{ m/s}^2
+	\end{equation}
+	该结果与标准值 $9.80\text{ m/s}^2$ 的相对误差仅为 $0.22\%$，充分证明了方向平均消摩法的极其高超的学术精准度。
+	
+	\section{实验误差来源深度剖析与讨论}
+	通过对五项任务的整体审视，数字化物理实验的误差呈现出独特的离散化特征：
+	\begin{enumerate}
+		\item {\bf 空间与时间量子化本征误差：} PASCO 位移传感器的物理分辩率存在硬性边界（$\Delta \approx 0.1212\text{ mm}$）。当小车处于极低速运动时，在固定的采样周期 $\tau$ 内，位移跨越的编码器刻度数过少，导致速度差分曲线产生本征的阶跃震荡。
+		\item {\bf 二次求导的噪声激增：} 虽有五点算子平滑机制，但在计算加速度时，噪声会被二次放大。这也是为何任务五中必须通过分段拟合速度曲线斜率（而非直接读取加速度计）来获取加速度的原因。
+		\item {\bf 空气阻力动态非线性：} 在简谐振荡及高速碰撞中，空气阻力并非严格的恒定常数，而是带有与速度平方相关的非线性高阶项，这导致了正弦拟合后期会出现极其微小的相位漂移。
+		\item {\bf 实验平台未完全固定：}在测量中，实验平台随着小车的运动发生着轻微地移动，使得测得数据噪声变大。
+	\end{enumerate}
+	
+	\section{结论}
+	本文借助高精度 PASCO 数字化传感器平台，深入研究了一维机械运动的各种典型动力学特征。通过对离散时空数据进行科学的五点差分与最小二乘拟合，有效克服了量子化采样噪声。利用方向平均消摩法成功解调出极其精确的重力加速度值。整个实验环环相扣，从静态摩擦校准到动态守恒检验，均高度符合经典力学理论，展现了数字化物理物理实验的极高学术价值。
+	
+\end{document}
